@@ -13,7 +13,7 @@ var generalLanguages = [
     { "id":12, "Name": "Go", "Count": 5049, "Type": "Procedural", "Procent":"8.8%" },
     { "id":13, "Name": "Kotlin", "Count": 4475, "Type": "Object_oriented", "Procent":"7.8%" },
     { "id":14, "Name": "Ruby", "Count": 4074, "Type": "Object_oriented", "Procent":"7.1%" },
-    { "id":15, "Name": "Assembly", "Count": 3557, "Type": "Proceduralass", "Procent":"6.2%" },
+    { "id":15, "Name": "Assembly", "Count": 3557, "Type": "Procedural", "Procent":"6.2%" },
     { "id":16, "Name": "VBA", "Count": 3500, "Type": "Object_oriented", "Procent":"6.1%" },
     { "id":17, "Name": "Swift", "Count": 3385, "Type": "Object_oriented", "Procent":"5.9%" },
     { "id":18, "Name": "R", "Count": 3271, "Type": "Functional", "Procent":"5.7%" },
