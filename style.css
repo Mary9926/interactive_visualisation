@@ -24,4 +24,34 @@ body {
 
 .title {
     letter-spacing: 2px;
+    color: white;
+}
+
+.paradigmSelectBox{
+    color:white;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    margin-top: 10px;
+}
+
+.text-white{
+    color:white;
+}
+
+.categoryLanguageSelctBox{
+    color:white;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    margin-top: 10px;
+    
+}
+
+.select {
+    color:none;
 }

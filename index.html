@@ -15,21 +15,23 @@
 <body>
     <div class="content-center">
         <div>
-            <h1 class="title">Stackoverflow 2020 </br> Developer Survey</h1>
+            <h1 class="title">Stackoverflow 2020 </br> Developer Survey </h1>
+            <h2 class="title" ></br> 57 378 responses</h2>
             <div id="controls">
-                <form id="app-cover">
-                    <div>
-                        <label for="languages">Slect lenguage paradigm:</label>
+                <div id="app-cover">
+                    <div class=paradigmSelectBox>
+                        <label for="language">Slect lenguage paradigm:</label>
                         <select id="paradigm_select" name="paradigmSelected">
                             <option value="All">All</option>
-                            <option value="Object_oriented">Object-oriented</option>
-                            <option value="Functional">Functional</option>
-                            <option value="Procedural">Procedural</option>
-                            <option value="Script">Script</option>
-                            <option value="Declarative">Declarative</option>
+                            <option value="Object_oriented" style="background-color:#bebada">Object-oriented</option>
+                            <option value="Functional" style="background-color:#fb8072">Functional</option>
+                            <option value="Procedural" style="background-color:#8dd3c7">Procedural</option>
+                            <option value="Script" style="background-color:#ffffb3" >Script</option>
+                            <option value="Declarative"style="background-color:#80b1d3">Declarative</option>
+                            
                         </select>
                     </div>
-                    <div>
+                    <div class="categoryLanguageSelctBox">
                         <label for="languages">Slect lenguage category</label>
                         <select name="category" id="category">
                             <option value="popular">Most Popular</option>
@@ -38,11 +40,13 @@
                             <option value="wanted">Most Wanted</option>
                         </select>
                     </div>
-                </form>
+                    <div class="text-white">Select two languages to comapre <button id="someButton">Compare</button></div>
+                </div>
             </div>
         </div>
         <div id="languages_chart"></div>
     </div>
+    
 </body>
 
 </html>

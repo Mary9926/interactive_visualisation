@@ -1,3 +1,5 @@
+let selectedItems = [];
+
 document.addEventListener("DOMContentLoaded", () => {
     drawBubbleChart(generalLanguages);
 
@@ -37,8 +39,9 @@ let getDatasetByCategory = (selected_category) => {
 }
 
 let drawBubbleChart = (dataset) => {
-    var width = 800
-    var height = 800
+    selectedItems = [];
+    var width = 800;
+    var height = 800;
 
     document.getElementById("languages_chart").innerHTML = "";
 
@@ -54,7 +57,7 @@ let drawBubbleChart = (dataset) => {
 
     var size = d3.scaleLinear()
         .domain([0, 60000])
-        .range([20, 80])  // circle radius
+        .range([20, 80]);  // circle radius
 
     // create a tooltip
     var Tooltip = d3.select("#languages_chart")
@@ -65,12 +68,12 @@ let drawBubbleChart = (dataset) => {
         .style("border", "solid")
         .style("border-width", "3px")
         .style("border-radius", "6px")
-        .style("padding", "10px")
+        .style("padding", "10px");
 
     // tooltip functions
     var mouseover = (d) => {
         Tooltip
-            .style("opacity", 1)
+            .style("opacity", 1);
     }
     var mousemove = function (d) {
         Tooltip
@@ -81,6 +84,24 @@ let drawBubbleChart = (dataset) => {
     var mouseleave = (d) => {
         Tooltip
             .style("opacity", 0)
+    }
+    var onClick = function (d, i) {
+        if (!d3.select(this).classed("selected") && selectedItems.length < 2) {
+            selectedItems.push(d.id);
+            d3.select(this).classed("selected", true);
+            d3.select(this).transition().attr("stroke", "black").style("stroke-width", 6);
+        }
+        else if (d3.select(this).classed("selected")) {
+            selectedItems.splice(selectedItems.indexOf(d.id), 1);
+            d3.select(this).classed("selected", false);
+            d3.select(this).transition().attr("stroke", "black").style("stroke-width", 1);
+        }
+
+        console.log(selectedItems);
+    }
+
+    var compare = function (d) {
+        console.log("compare");
     }
 
     // node creation
@@ -96,7 +117,9 @@ let drawBubbleChart = (dataset) => {
         .style("fill", (d) => { return color(d.Type) })
         .style("fill-opacity", 0.8)
         .attr("stroke", "black")
+        .attr("cursor", "pointer")
         .style("stroke-width", 1)
+        .on('click', onClick)
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
