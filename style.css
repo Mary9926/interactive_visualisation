@@ -7,7 +7,11 @@
 body {
     margin-top: 2rem;
     margin-bottom: 3rem;
-    background-color: #72787e;
+    background-color: #72787e !important;
+}
+
+.bg-dark {
+    background-color: #72787e !important;
 }
 
 .node:hover {
@@ -18,7 +22,7 @@ body {
 .content-center {
     display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -30,23 +34,25 @@ body {
 .paradigmSelectBox{
     color:white;
     display: flex;
-    width: 100%;
+    flex-flow: column;
     justify-content: center;
-    align-items: center;
     margin: 5px;
     margin-top: 10px;
 }
 
 .text-white{
-    color:white;
+    color:white !important;
+}
+
+.text-center{
+    text-align: center;
 }
 
 .categoryLanguageSelctBox{
     color:white;
     display: flex;
-    width: 100%;
+    flex-flow: column;
     justify-content: center;
-    align-items: center;
     margin: 5px;
     margin-top: 10px;
     
@@ -82,4 +88,15 @@ body {
 
 .titleStyle{
     color:white !important;
+}
+
+#languages_chart{
+    position: relative;
+}
+
+.modal-header{
+    width: 100%;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: end !important;
 }

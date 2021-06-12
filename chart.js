@@ -59,7 +59,6 @@ let drawBubbleChart = (dataset) => {
         .attr("width", width)
         .attr("height", height)
 
-
     // color palette
     var color = d3.scaleOrdinal()
         .domain(["Procedural", "Script", "Object_oriented", "Functional", "Declarative"])
@@ -78,7 +77,8 @@ let drawBubbleChart = (dataset) => {
         .style("border", "solid")
         .style("border-width", "3px")
         .style("border-radius", "6px")
-        .style("padding", "10px");
+        .style("padding", "10px")
+        .style("position", "absolute");
 
     // tooltip functions
     var mouseover = (d) => {
@@ -148,10 +148,7 @@ let drawBubbleChart = (dataset) => {
                 .attr("cx", (d) => { return d.x; })
                 .attr("cy", (d) => { return d.y; })
         });
-
-
 }
-
 
 let getLanguageById = (dataset, id) => {
     return dataset.filter(lang => lang.id == id)[0];
@@ -174,7 +171,6 @@ let drawCompare = (langueageIdFirst, langueageIdSecond) => {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-
     data = [
         {
             group: "Popular",
@@ -196,7 +192,6 @@ let drawCompare = (langueageIdFirst, langueageIdSecond) => {
             "firstLanguage": getLanguageById(wantedLanguages, langueageIdFirst).Procent,
             "secondLanguage": getLanguageById(wantedLanguages, langueageIdSecond).Procent
         }
-
     ]
 
     var subgroups = ["firstLanguage", "secondLanguage"]

@@ -4,11 +4,13 @@
     <meta charset="utf-8">
     <title>Programming Languages</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="undefined" crossorigin="anonymous">
+
     <!-- Load d3.js -->
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
    
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="undefined" crossorigin="anonymous"></script>
     <script src="data.js"></script>
     <script src="chart.js"></script>
 </head>
@@ -29,11 +31,10 @@
                             <option value="Procedural" style="background-color:#8dd3c7">Procedural</option>
                             <option value="Script" style="background-color:#ffffb3" >Script</option>
                             <option value="Declarative"style="background-color:#80b1d3">Declarative</option>
-                            
                         </select>
                     </div>
                     <div class="categoryLanguageSelctBox">
-                        <label for="languages">Slect lenguage category</label>
+                        <label for="languages">Slect lenguage category:</label>
                         <select name="category" id="category">
                             <option value="popular">Most Popular</option>
                             <option value="loved">Most Loved</option>
@@ -41,15 +42,26 @@
                             <option value="wanted">Most Wanted</option>
                         </select>
                     </div>
-                    <div class="text-white">Select two languages to comapre <button id="compareBtn">Compare</button></div>
-                    <div id="comparison">                    
-                    </div>
+                    <div class="text-white text-center">Select two languages to compare</div>
+                    <div id="compareBtn" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#compareModal">Compare</div>
                 </div>
             </div>
         </div>
         <div id="languages_chart"></div>
     </div>
-    
+
+    <div class="modal fade" tabindex="-1" id="compareModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-dark">
+            <div class="modal-header">
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="comparison"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 
 </html>
