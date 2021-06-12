@@ -79,3 +79,7 @@ body {
 .xAxisStyle text{
     fill: white;
 } 
+
+.titleStyle{
+    color:white !important;
+}

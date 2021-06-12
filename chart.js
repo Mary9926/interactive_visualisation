@@ -21,7 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     document.getElementById("compareBtn").addEventListener("click", (event) => {
-        drawCompare(selectedItems[0], selectedItems[1]);
+        if (selectedItems.length == 2) {
+            drawCompare(selectedItems[0], selectedItems[1]);
+        }
+        else{
+            alert("Please select two languages");
+        }
     });
 });
 
@@ -82,7 +87,7 @@ let drawBubbleChart = (dataset) => {
     }
     var mousemove = function (d) {
         Tooltip
-            .html('<u>' + d.Name + "<br>" + d.Procent +"%" +'</u>' + "<br>" + d.Count + " votes")
+            .html('<u>' + d.Name + "<br>" + d.Procent + "%" + '</u>' + "<br>" + d.Count + " votes")
             .style("left", (d3.mouse(this)[0] + 20) + "px")
             .style("top", (d3.mouse(this)[1]) + "px")
     }
@@ -153,94 +158,119 @@ let getLanguageById = (dataset, id) => {
 }
 
 let drawCompare = (langueageIdFirst, langueageIdSecond) => {
-   d3.select("#comparison > *").remove(); 
-    
+    d3.select("#comparison > *").remove();
+
     // set the dimensions and margins of the graph
-    var margin = { top: 20, right: 30, bottom: 20, left: 50 },
-        width = 400 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+    var margin = { top: 50, right: 30, bottom: 20, left: 50 },
+        width = 500 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
-    
+
     var svg = d3.select("#comparison")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        data = [
-            {
-                group: "Popular",
-                "firstLanguage": getLanguageById(generalLanguages, langueageIdFirst).Procent,
-                "secondLanguage": getLanguageById(generalLanguages, langueageIdSecond).Procent
-            },
-            {
-                group: "Loved",
-                "firstLanguage": getLanguageById(lovedLanguages, langueageIdFirst).Procent,
-                "secondLanguage": getLanguageById(lovedLanguages, langueageIdSecond).Procent
-            },
-            {
-                group: "Dreaded",
-                "firstLanguage": getLanguageById(dreadedLanguages, langueageIdFirst).Procent,
-                "secondLanguage": getLanguageById(dreadedLanguages, langueageIdSecond).Procent
-            },
-            {
-                group: "Wanted",
-                "firstLanguage": getLanguageById(wantedLanguages, langueageIdFirst).Procent,
-                "secondLanguage": getLanguageById(wantedLanguages, langueageIdSecond).Procent
-            }
-            
-        ]
-        
-        var subgroups = ["firstLanguage", "secondLanguage"]
-        var groups = ["Popular", "Loved", "Dreaded", "Wanted"]
 
-        // Add X axis
-        var x = d3.scaleBand()
-            .domain(groups)
-            .range([0, width])
-            .padding([0.1])
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickSize(0))
-            .attr("class", "xAxisStyle")
-            .style("font", "16px times");
+    data = [
+        {
+            group: "Popular",
+            "firstLanguage": getLanguageById(generalLanguages, langueageIdFirst).Procent,
+            "secondLanguage": getLanguageById(generalLanguages, langueageIdSecond).Procent
+        },
+        {
+            group: "Loved",
+            "firstLanguage": getLanguageById(lovedLanguages, langueageIdFirst).Procent,
+            "secondLanguage": getLanguageById(lovedLanguages, langueageIdSecond).Procent
+        },
+        {
+            group: "Dreaded",
+            "firstLanguage": getLanguageById(dreadedLanguages, langueageIdFirst).Procent,
+            "secondLanguage": getLanguageById(dreadedLanguages, langueageIdSecond).Procent
+        },
+        {
+            group: "Wanted",
+            "firstLanguage": getLanguageById(wantedLanguages, langueageIdFirst).Procent,
+            "secondLanguage": getLanguageById(wantedLanguages, langueageIdSecond).Procent
+        }
 
-        // Add Y axis
-        var y = d3.scaleLinear()
-            .domain([0, 100])
-            .range([height, 0]);
-        svg.append("g")
-            .call(d3.axisLeft(y))
-            .attr("class", "yAxisStyle")
-            .style("font", "16px times")
-            .append('text')
-            .text('Values in %');
-        // Another scale for subgroup position?
-        var xSubgroup = d3.scaleBand()
-            .domain(subgroups)
-            .range([0, x.bandwidth()])
-            .padding([0.15])
+    ]
 
-        // color palette
-        var color = d3.scaleOrdinal()
-            .domain(subgroups)
-            .range(d3.schemeSet2)
+    var subgroups = ["firstLanguage", "secondLanguage"]
+    var groups = ["Popular", "Loved", "Dreaded", "Wanted"]
 
-        // Show the bars
-        svg.append("g")
-            .selectAll("g")
-            .data(data)
-            .enter()
-            .append("g")
-            .attr("transform", function (d) { return "translate(" + x(d.group) + ",0)"; })
-            .selectAll("rect")
-            .data(function (d) { return subgroups.map(function (key) { return { key: key, value: d[key] }; }); })
-            .enter().append("rect")
-            .attr("x", function (d) { return xSubgroup(d.key); })
-            .attr("y", function (d) { return y(d.value); })
-            .attr("width", xSubgroup.bandwidth())
-            .attr("height", function (d) { return height - y(d.value); })
-            .attr("fill", function (d) { return color(d.key); });
+    //title
+    svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .attr("class", "titleStyle")
+        .style("font-size", "18px times")
+        .style("text-decoration", "bold")
+        .style("fill", "white")
+        .text("Comparison in %");
+
+    //legend
+    svg.append("circle").attr("cx", 300).attr("cy", 30).attr("r", 10).style("fill", "#66c2a5")
+    svg.append("circle").attr("cx", 300).attr("cy", 60).attr("r", 10).style("fill", "#fc8d62")
+    svg.append("text").attr("x", 320).attr("y", 30)
+        .text("" + getLanguageById(generalLanguages, langueageIdFirst).Name + "")
+        .style("font-size", "15px times")
+        .attr("alignment-baseline", "right")
+        .style("fill", "white")
+    svg.append("text").attr("x", 320).attr("y", 60)
+        .text("" + getLanguageById(generalLanguages, langueageIdSecond).Name + "")
+        .style("font-size", "15px times")
+        .attr("alignment-baseline", "right")
+        .style("fill", "white")
+
+
+    // Add X axis
+    var x = d3.scaleBand()
+        .domain(groups)
+        .range([0, width])
+        .padding([0.1])
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x).tickSize(0))
+        .attr("class", "xAxisStyle")
+        .style("font", "16px times");
+
+    // Add Y axis
+    var y = d3.scaleLinear()
+        .domain([0, 100])
+        .range([height, 0]);
+    svg.append("g")
+        .call(d3.axisLeft(y))
+        .attr("class", "yAxisStyle")
+        .style("font", "16px times");
+    // Another scale for subgroup position?
+    var xSubgroup = d3.scaleBand()
+        .domain(subgroups)
+        .range([0, x.bandwidth()])
+        .padding([0.15])
+
+    // color palette
+    var color = d3.scaleOrdinal()
+        .domain(subgroups)
+        .range(d3.schemeSet2)
+
+    // Show the bars
+    svg.append("g")
+        .selectAll("g")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("transform", function (d) { return "translate(" + x(d.group) + ",0)"; })
+        .selectAll("rect")
+        .data(function (d) { return subgroups.map(function (key) { return { key: key, value: d[key] }; }); })
+        .enter().append("rect")
+        .attr("x", function (d) { return xSubgroup(d.key); })
+        .attr("y", function (d) { return y(d.value); })
+        .attr("width", xSubgroup.bandwidth())
+        .attr("height", function (d) { return height - y(d.value); })
+        .attr("fill", function (d) { return color(d.key); });
 }
