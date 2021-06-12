@@ -55,3 +55,27 @@ body {
 .select {
     color:none;
 }
+
+.yAxisStyle line{
+    stroke: white;
+}
+
+.yAxisStyle path{
+    stroke: white;
+}
+  
+.yAxisStyle text{
+    fill: white;
+} 
+
+.xAxisStyle line{
+    stroke: white;
+}
+
+.xAxisStyle path{
+    stroke: white;
+}
+  
+.xAxisStyle text{
+    fill: white;
+} 

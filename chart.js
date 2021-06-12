@@ -1,6 +1,4 @@
 let selectedItems = [];
-var langueageIdFirst = 0;
-var langueageIdSecond = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
     drawBubbleChart(generalLanguages);
@@ -21,6 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let dataset = extractDatasetBy(selected_category, selected_paradigm);
         drawBubbleChart(dataset);
     })
+
+    document.getElementById("compareBtn").addEventListener("click", (event) => {
+        drawCompare(selectedItems[0], selectedItems[1]);
+    });
 });
 
 let extractDatasetBy = (selected_category, selected_paradigm) => {
@@ -80,7 +82,7 @@ let drawBubbleChart = (dataset) => {
     }
     var mousemove = function (d) {
         Tooltip
-            .html('<u>' + d.Name + "<br>" + d.Procent + '</u>' + "<br>" + d.Count + " votes")
+            .html('<u>' + d.Name + "<br>" + d.Procent +"%" +'</u>' + "<br>" + d.Count + " votes")
             .style("left", (d3.mouse(this)[0] + 20) + "px")
             .style("top", (d3.mouse(this)[1]) + "px")
     }
@@ -99,17 +101,7 @@ let drawBubbleChart = (dataset) => {
             d3.select(this).classed("selected", false);
             d3.select(this).transition().attr("stroke", "black").style("stroke-width", 1);
         }
-
         console.log(selectedItems);
-        var langueageIdFirst = selectedItems[0];
-        var langueageIdSecond = selectedItems[1];
-
-        console.log(langueageIdFirst);
-        console.log(langueageIdSecond);
-    }
-
-    var compare = function (d) {
-        console.log("compare");
     }
 
     // node creation
@@ -155,16 +147,21 @@ let drawBubbleChart = (dataset) => {
 
 }
 
-//--------------------------.......................................
 
-let draw = (langueageIdFirst, langueageIdSecond) => {
+let getLanguageById = (dataset, id) => {
+    return dataset.filter(lang => lang.id == id)[0];
+}
 
+let drawCompare = (langueageIdFirst, langueageIdSecond) => {
+   d3.select("#comparison > *").remove(); 
+    
     // set the dimensions and margins of the graph
-    var margin = { top: 10, right: 30, bottom: 20, left: 50 },
-        width = 460 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+    var margin = { top: 20, right: 30, bottom: 20, left: 50 },
+        width = 400 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
+    
     var svg = d3.select("#comparison")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -174,50 +171,59 @@ let draw = (langueageIdFirst, langueageIdSecond) => {
 
         data = [
             {
-                group: "Most loved",
-                "c#": 12,
-                "java": 4
+                group: "Popular",
+                "firstLanguage": getLanguageById(generalLanguages, langueageIdFirst).Procent,
+                "secondLanguage": getLanguageById(generalLanguages, langueageIdSecond).Procent
             },
             {
-                group: "Most dreaded",
-                "java": 14,
-                "c#": 6
+                group: "Loved",
+                "firstLanguage": getLanguageById(lovedLanguages, langueageIdFirst).Procent,
+                "secondLanguage": getLanguageById(lovedLanguages, langueageIdSecond).Procent
+            },
+            {
+                group: "Dreaded",
+                "firstLanguage": getLanguageById(dreadedLanguages, langueageIdFirst).Procent,
+                "secondLanguage": getLanguageById(dreadedLanguages, langueageIdSecond).Procent
+            },
+            {
+                group: "Wanted",
+                "firstLanguage": getLanguageById(wantedLanguages, langueageIdFirst).Procent,
+                "secondLanguage": getLanguageById(wantedLanguages, langueageIdSecond).Procent
             }
+            
         ]
-
-        // List of subgroups = header of the csv files = soil condition here
-        //var subgroups = data.columns.slice(1)
-        console.log(subgroups)
-        var subgroups = ["c#", "java"]
-
-        // List of groups = species here = value of the first column called group -> I show them on the X axis
-        var groups = d3.map(data, function (d) { return (d.group) }).keys()
-        console.log(groups)
-        groups = ["Most loved", "Most dreaded"]
+        
+        var subgroups = ["firstLanguage", "secondLanguage"]
+        var groups = ["Popular", "Loved", "Dreaded", "Wanted"]
 
         // Add X axis
         var x = d3.scaleBand()
             .domain(groups)
             .range([0, width])
-            .padding([0.2])
+            .padding([0.1])
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickSize(0));
+            .call(d3.axisBottom(x).tickSize(0))
+            .attr("class", "xAxisStyle")
+            .style("font", "16px times");
 
         // Add Y axis
         var y = d3.scaleLinear()
-            .domain([0, 40])
+            .domain([0, 100])
             .range([height, 0]);
         svg.append("g")
-            .call(d3.axisLeft(y));
-
+            .call(d3.axisLeft(y))
+            .attr("class", "yAxisStyle")
+            .style("font", "16px times")
+            .append('text')
+            .text('Values in %');
         // Another scale for subgroup position?
         var xSubgroup = d3.scaleBand()
             .domain(subgroups)
             .range([0, x.bandwidth()])
-            .padding([0.05])
+            .padding([0.15])
 
-        // color palette = one color per subgroup
+        // color palette
         var color = d3.scaleOrdinal()
             .domain(subgroups)
             .range(d3.schemeSet2)
@@ -225,7 +231,6 @@ let draw = (langueageIdFirst, langueageIdSecond) => {
         // Show the bars
         svg.append("g")
             .selectAll("g")
-            // Enter in data = loop group per group
             .data(data)
             .enter()
             .append("g")
@@ -238,6 +243,4 @@ let draw = (langueageIdFirst, langueageIdSecond) => {
             .attr("width", xSubgroup.bandwidth())
             .attr("height", function (d) { return height - y(d.value); })
             .attr("fill", function (d) { return color(d.key); });
-
-    
 }
