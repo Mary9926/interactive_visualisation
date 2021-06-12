@@ -78,7 +78,8 @@ let drawBubbleChart = (dataset) => {
         .style("border-width", "3px")
         .style("border-radius", "6px")
         .style("padding", "10px")
-        .style("position", "absolute");
+        .style("position", "absolute")
+        .style("font", "16px times");
 
     // tooltip functions
     var mouseover = (d) => {
@@ -87,7 +88,7 @@ let drawBubbleChart = (dataset) => {
     }
     var mousemove = function (d) {
         Tooltip
-            .html('<u>' + d.Name + "<br>" + d.Procent + "%" + '</u>' + "<br>" + d.Count + " votes")
+            .html("<b>" + d.Name + "</b>"+ "<br>" + d.Procent + "%" + "<br>" + d.Count + " votes")
             .style("left", (d3.mouse(this)[0] + 20) + "px")
             .style("top", (d3.mouse(this)[1]) + "px")
     }

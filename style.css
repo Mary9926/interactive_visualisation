@@ -100,3 +100,14 @@ body {
     align-items: flex-end !important;
     justify-content: end !important;
 }
+.btnPos{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    position: center;
+    width: 100%;
+}
+
+.selection{
+    margin-top: 40px !important;
+}

@@ -10,6 +10,7 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="undefined" crossorigin="anonymous"></script>
     <script src="data.js"></script>
     <script src="chart.js"></script>
@@ -19,11 +20,11 @@
     <div class="content-center">
         <div>
             <h1 class="title">Stackoverflow 2020 </br> Developer Survey </h1>
-            <h2 class="title" ></br> 57 378 responses</h2>
+            <h3 class="title" >57 378 responses</h3>
             <div id="controls">
                 <div id="app-cover">
                     <div class=paradigmSelectBox>
-                        <label for="language">Slect lenguage paradigm:</label>
+                        <label for="language" style="font-size: large; color:#06090c; font-weight: bold;">Slect lenguage paradigm:</label>
                         <select id="paradigm_select" name="paradigmSelected">
                             <option value="All">All</option>
                             <option value="Object_oriented" style="background-color:#bebada">Object-oriented</option>
@@ -34,7 +35,7 @@
                         </select>
                     </div>
                     <div class="categoryLanguageSelctBox">
-                        <label for="languages">Slect lenguage category:</label>
+                        <label for="languages" style="font-size: large; color:#06090c; font-weight: bold;">Slect lenguage category:</label>
                         <select name="category" id="category">
                             <option value="popular">Most Popular</option>
                             <option value="loved">Most Loved</option>
@@ -42,8 +43,8 @@
                             <option value="wanted">Most Wanted</option>
                         </select>
                     </div>
-                    <div class="text-white text-center">Select two languages to compare</div>
-                    <div id="compareBtn" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#compareModal">Compare</div>
+                    <div class="text-white text-center selection" style="font-size: large; font-weight: bold;" >Select two languages to compare</div>
+                    <div id="compareBtn" class="btnPos btn btn-dark" data-bs-toggle="modal" data-bs-target="#compareModal">Compare</div>
                 </div>
             </div>
         </div>
